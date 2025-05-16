@@ -1,0 +1,54 @@
+# Directorios de construcción
+build/
+output/
+tmp/
+logs/
+
+# Archivos temporales
+*.log
+*.tmp
+*.iso
+*.sha256
+.checkpoint
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Archivos de respaldo
+*.bak
+*.backup
+*.old
+
+# Directorios de caché
+__pycache__/
+*.pyc
+*.pyo
+.cache/
+
+# Archivos de configuración local
+config.local.env
+*.local
+
+# Archivos sensibles
+*.key
+*.pem
+*.crt
+secrets/
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-*
+
+# Archivos grandes
+*.squashfs
+*.img
+*.qcow2
+
+# Directorios de máquinas virtuales
+.vagrant/
+packer_cache/
