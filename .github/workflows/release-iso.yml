@@ -1,0 +1,108 @@
+name: Release ISO with Google Drive
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 1.0.1)'
+        required: true
+        default: '1.0.0'
+  push:
+    tags:
+      - 'v*'
+
+env:
+  RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    # Necesitamos un runner con más espacio
+    # o usar self-hosted runner
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set version
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+        else
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        fi
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          debootstrap \
+          squashfs-tools \
+          xorriso \
+          grub-pc-bin \
+          grub-efi-amd64-bin \
+          genisoimage
+    
+    - name: Build ISO (Mini version for testing)
+      run: |
+        # Para pruebas, usar mini build
+        # En producción, usar build completo
+        sudo ./mini-build.sh
+        mv output/nubemlinux-mini-*.iso output/nubemlinux-aicorp-${{ env.VERSION }}.iso
+    
+    - name: Compress ISO
+      run: |
+        cd output
+        xz -9 -k nubemlinux-aicorp-${{ env.VERSION }}.iso
+        sha256sum nubemlinux-aicorp-${{ env.VERSION }}.iso.xz > nubemlinux-aicorp-${{ env.VERSION }}.iso.xz.sha256
+    
+    - name: Setup rclone
+      run: |
+        curl https://rclone.org/install.sh | sudo bash
+        mkdir -p ~/.config/rclone
+        echo "$RCLONE_CONFIG" | base64 -d > ~/.config/rclone/rclone.conf
+    
+    - name: Upload to Google Drive
+      run: |
+        rclone mkdir gdrive:/NubemLinux-AICorp/releases/v${{ env.VERSION }}
+        rclone copy output/nubemlinux-aicorp-${{ env.VERSION }}.iso.xz gdrive:/NubemLinux-AICorp/releases/v${{ env.VERSION }}/
+        rclone copy output/nubemlinux-aicorp-${{ env.VERSION }}.iso.xz.sha256 gdrive:/NubemLinux-AICorp/releases/v${{ env.VERSION }}/
+        
+        # Get shareable link
+        GDRIVE_LINK=$(rclone link gdrive:/NubemLinux-AICorp/releases/v${{ env.VERSION }}/nubemlinux-aicorp-${{ env.VERSION }}.iso.xz)
+        echo "GDRIVE_LINK=$GDRIVE_LINK" >> $GITHUB_ENV
+    
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        tag_name: v${{ env.VERSION }}
+        release_name: NubemLinux-AICorp v${{ env.VERSION }}
+        body: |
+          # NubemLinux-AICorp v${{ env.VERSION }}
+          
+          ## Download
+          - **Google Drive**: ${{ env.GDRIVE_LINK }}
+          - **Size**: Compressed ISO (~1GB)
+          
+          ## Verification
+          Download the `.sha256` file and verify:
+          ```bash
+          sha256sum -c nubemlinux-aicorp-${{ env.VERSION }}.iso.xz.sha256
+          ```
+          
+          ## Installation
+          1. Download and extract: `xz -d nubemlinux-aicorp-${{ env.VERSION }}.iso.xz`
+          2. Create bootable USB: `dd if=nubemlinux-aicorp-${{ env.VERSION }}.iso of=/dev/sdX bs=4M`
+          3. Boot and install
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: output/nubemlinux-aicorp-${{ env.VERSION }}.iso.xz.sha256
+        asset_name: nubemlinux-aicorp-${{ env.VERSION }}.iso.xz.sha256
+        asset_content_type: text/plain
