@@ -1,0 +1,23 @@
+# Code Owners para NubemLinux
+
+# Global owners
+* @nubemlinux/maintainers
+
+# Scripts
+*.sh @nubemlinux/scripts
+scripts/ @nubemlinux/scripts
+
+# Configuration
+config.env @nubemlinux/config
+config/ @nubemlinux/config
+
+# Documentation
+*.md @nubemlinux/docs
+docs/ @nubemlinux/docs
+
+# CI/CD
+.github/ @nubemlinux/devops
+
+# Core system files
+src/ @nubemlinux/core
+initramfs/ @nubemlinux/core

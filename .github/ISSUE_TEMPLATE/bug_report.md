@@ -1,36 +1,32 @@
 ---
 name: Reporte de Bug
 about: Crea un reporte para ayudarnos a mejorar
-title: '[BUG] '
+title: ''
 labels: bug
 assignees: ''
 
 ---
 
-**Describe el bug**
-Una descripción clara y concisa del bug.
+**Descripción del bug**
+Una descripción clara y concisa de qué es el bug.
 
-**Para Reproducir**
+**Para reproducir**
 Pasos para reproducir el comportamiento:
 1. Ir a '...'
 2. Click en '....'
-3. Desplazar hasta '....'
+3. Scroll hasta '....'
 4. Ver error
 
 **Comportamiento esperado**
-Una descripción clara de lo que esperabas que sucediera.
+Una descripción clara y concisa de lo que esperabas que ocurriera.
 
-**Screenshots**
-Si aplica, añade screenshots para ayudar a explicar el problema.
+**Capturas de pantalla**
+Si aplica, añade capturas de pantalla para explicar tu problema.
 
-**Entorno (completa la siguiente información):**
- - Versión de NubemLinux: [ej. 1.0.0]
- - Hardware: [ej. Intel i7, 16GB RAM]
- - Tipo de instalación: [ej. VM, USB, PXE]
- - Configuración especial: [ej. proxy corporativo]
-
-**Logs adicionales**
-Adjunta cualquier log relevante del sistema.
+**Sistema (por favor completa la siguiente información):**
+ - OS: [e.g. Ubuntu 22.04]
+ - Versión de NubemLinux: [e.g. 1.0.0]
+ - Arquitectura: [e.g. x86_64]
 
 **Contexto adicional**
 Añade cualquier otro contexto sobre el problema aquí.

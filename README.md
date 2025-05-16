@@ -1,5 +1,11 @@
 # NubemLinux-AICorp
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/release/NUbem000/NubemLinux-AICorp.svg)](https://github.com/NUbem000/NubemLinux-AICorp/releases)
+[![Build Status](https://github.com/NUbem000/NubemLinux-AICorp/workflows/Build%20NubemLinux/badge.svg)](https://github.com/NUbem000/NubemLinux-AICorp/actions)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-22.04%20LTS-orange)](https://ubuntu.com/)
+[![AI Powered](https://img.shields.io/badge/AI-Ollama-blue)](https://ollama.ai/)
+
 Distribución Ubuntu personalizada con IA integrada, branding corporativo y capacidades de autogestión inteligente.
 
 ## Características principales
@@ -40,7 +46,7 @@ Distribución Ubuntu personalizada con IA integrada, branding corporativo y capa
 
 ```bash
 # Clonar repositorio
-git clone https://github.com/aicorp/nubemlinux
+git clone https://github.com/NUbem000/NubemLinux-AICorp
 cd NubemLinux-AICorp
 
 # Ejecutar script de construcción
@@ -126,19 +132,34 @@ nubemlinux-update
 
 ## Soporte
 
-- Email: support@aicorp.local
-- Issues: https://github.com/aicorp/nubemlinux/issues
-- Docs: https://docs.nubemlinux.com
+- Email: support@nubemlinux.com
+- Issues: https://github.com/NUbem000/NubemLinux-AICorp/issues
+- Docs: https://github.com/NUbem000/NubemLinux-AICorp/tree/main/docs
 
 ## Licencia
 
 Copyright © 2024 AICorp. Todos los derechos reservados.
 
+Ver [LICENSE](LICENSE) para más detalles.
+
 ## Changelog
 
-### v1.0.0 (2024-01-XX)
+### v1.0.0 (2024-05-16)
 - Release inicial
 - Integración de Ollama y modelos Llama
 - Sistema Watchdog completo
 - Branding corporativo
 - Seguridad reforzada
+
+## Contribuir
+
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) para detalles sobre cómo contribuir al proyecto.
+
+## Agradecimientos
+
+- Ubuntu Team por la distribución base
+- Ollama Team por la plataforma de IA
+- Comunidad open source
+
+---
+⭐ Si te gusta este proyecto, dale una estrella en GitHub!

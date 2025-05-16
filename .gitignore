@@ -51,4 +51,4 @@ secrets/
 
 # Directorios de máquinas virtuales
 .vagrant/
-packer_cache/
+packer_cache/.env

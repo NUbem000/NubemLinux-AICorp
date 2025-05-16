@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          debootstrap \
+          squashfs-tools \
+          xorriso \
+          grub-pc-bin \
+          grub-efi-amd64-bin
+    
+    - name: Build ISO
+      run: |
+        sudo ./build_nubemlinux.sh
+    
+    - name: Calculate checksums
+      run: |
+        cd output
+        sha256sum nubemlinux-*.iso > nubemlinux.sha256
+        md5sum nubemlinux-*.iso > nubemlinux.md5
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: NubemLinux ${{ github.ref }}
+        draft: false
+        prerelease: false
+    
+    - name: Upload ISO
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./output/nubemlinux.iso
+        asset_name: nubemlinux-${{ github.ref_name }}.iso
+        asset_content_type: application/octet-stream
+    
+    - name: Upload SHA256
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./output/nubemlinux.sha256
+        asset_name: nubemlinux-${{ github.ref_name }}.sha256
+        asset_content_type: text/plain
