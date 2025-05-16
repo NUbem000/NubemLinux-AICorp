@@ -1,0 +1,32 @@
+{
+  "name": "nubemlinux-aicorp",
+  "version": "1.0.0",
+  "description": "Ubuntu distribution with integrated AI, corporate branding, and intelligent self-management",
+  "main": "build_nubemlinux.sh",
+  "scripts": {
+    "build": "./build_nubemlinux.sh",
+    "test": "./checkpoint_manager.sh test",
+    "clean": "rm -rf build/ output/ tmp/ logs/",
+    "docs": "cd docs && mkdocs serve",
+    "publish": "./publish-to-github.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tu-usuario/NubemLinux-AICorp.git"
+  },
+  "keywords": [
+    "ubuntu",
+    "linux",
+    "ai",
+    "ollama",
+    "distribution",
+    "corporate",
+    "monitoring"
+  ],
+  "author": "AICorp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tu-usuario/NubemLinux-AICorp/issues"
+  },
+  "homepage": "https://github.com/tu-usuario/NubemLinux-AICorp#readme"
+}
